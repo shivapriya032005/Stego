@@ -1,0 +1,98 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+/* Glassmorphism Container */
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    width: 400px;
+    min-height: 500px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #fff;
+    display: flex;
+    flex-direction: column; /* Align elements vertically */
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Header */
+h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #d4af37;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Fields */
+input,
+textarea {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+textarea {
+    height: 80px;
+    resize: none;
+}
+
+/* File Upload */
+input[type="file"] {
+    border: none;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(45deg, #d4af37, #8b5cf6);
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #8b5cf6, #d4af37);
+}
+
+/* Back to Home Link */
+.back-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: #f8d32b;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.back-link:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+

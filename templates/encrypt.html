@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Encrypt Message</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+            background-image: url("{{ url_for('static', filename='encrypt.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        .main-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1, h3 {
+            color: #fbd786;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 16px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button, .btn-success {
+            background: linear-gradient(to right, #ffcc70, #c850c0);
+            color: white;
+            font-weight: bold;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        button:hover, .btn-success:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-success {
+            display: inline-block;
+            margin-top: 15px;
+            text-align: center;
+            background: #28a745;
+        }
+
+        .success, .error {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            color: #00ffcc;
+        }
+
+        .error {
+            color: #ff4f4f;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ffc107;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .preview {
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <!-- Left Column: Form and Messages -->
+        <div class="container left-column">
+            <h1>🔐 Encrypt Your Message</h1>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% elif success %}
+                <p class="success">✅ Image encrypted successfully!</p>
+                <p class="success">🆔 Your Image ID: <span id="imageID">{{ image_id }}</span></p>
+                <p class="success">🔐 Please save this ID safely for decryption!</p>
+                <button onclick="copyToClipboard()">Copy to Clipboard</button>
+            {% endif %}
+
+            <form method="POST" enctype="multipart/form-data">
+                <label for="image">Select Image:</label>
+                <input type="file" name="image" required>
+
+                <label for="message">Message:</label>
+                <textarea name="message" rows="4" required></textarea>
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+
+                <button type="submit">Encrypt</button>
+            </form>
+
+            <a href="/" class="back-link">← Back to Home</a>
+        </div>
+
+        <!-- Right Column: Image Preview -->
+        <div class="container right-column">
+            {% if success and base64_image %}
+                <h3>Encrypted Image Preview:</h3>
+                <img src="data:image/png;base64,{{ base64_image }}" alt="Preview" class="preview">
+                {% if download_url %}
+                    <a href="{{ download_url }}" class="btn-success">Download Encrypted Image</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard() {
+            const imageID = document.getElementById("imageID").innerText;
+            navigator.clipboard.writeText(imageID).then(() => {
+                alert("Image ID copied to clipboard!");
+            }).catch(() => {
+                alert("Failed to copy Image ID.");
+            });
+        }
+    </script>
+</body>
+</html>
